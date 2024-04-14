@@ -10,7 +10,6 @@ import { Layout } from './components/layout/component';
 const rootElement = document.getElementById('root');
 
 const root = ReactDOM.createRoot(rootElement);
-/* const name = "Anna"; */
 
 root.render(
   <Layout>
