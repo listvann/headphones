@@ -1,3 +1,3 @@
-export const Review = ({ review }) => {
+export const Review = ({ review}) => {
     return <div>{review}</div>;
 }; 

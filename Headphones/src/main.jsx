@@ -5,6 +5,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Headphone } from './components/headphone/component';
 import { headphones } from './constants/mock';
+import { Layout } from './components/layout/component';
 
 const rootElement = document.getElementById('root');
 
@@ -12,11 +13,13 @@ const root = ReactDOM.createRoot(rootElement);
 /* const name = "Anna"; */
 
 root.render(
-  <div>
-    {headphones.map((headphone) => (
-        <Headphone headphone={headphone} />
-      ))};
-  </div>
+  <Layout>
+    <div>
+      {headphones.map((headphone) => (
+          <Headphone headphone={headphone} />
+        ))};
+    </div>
+    </Layout>
 );
  
 /* root.render (
