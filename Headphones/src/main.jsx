@@ -3,23 +3,13 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Headphone } from './components/headphone/component';
-import { headphones } from './constants/mock';
-import { Layout } from './components/layout/component';
+import { App } from './App';
 
 const rootElement = document.getElementById('root');
 
 const root = ReactDOM.createRoot(rootElement);
 
-root.render(
-  <Layout>
-    <div>
-      {headphones.map((headphone) => (
-          <Headphone headphone={headphone} />
-        ))};
-    </div>
-    </Layout>
-);
+root.render(<App/>);
  
 /* root.render (
   React.createElement ("div", {

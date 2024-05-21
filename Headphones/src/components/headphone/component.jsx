@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/no-unknown-property */ 
 import { Codecs } from "../codecs/component";
+import { HeadphoneDetails } from "../headphone-details/component";
 import { Reviews } from "../reviews/component";
 
 export const Headphone = ({headphone}) => {
@@ -8,16 +9,12 @@ export const Headphone = ({headphone}) => {
         return null;
     }
 
-    const {name, brand, type, maxVolume,codecs, reviews} = headphone;
+    const {name, codecs, reviews} = headphone;
 
     return (
         <div>
             <h2>{name ? name : "NoName"}</h2> 
-            <div>
-                <p>{brand}</p>
-                <p>{type}</p>
-                <p>{maxVolume}</p>
-            </div>
+            <HeadphoneDetails headphone={headphone}/>
 
             {!!codecs?.length && (
             <div>
