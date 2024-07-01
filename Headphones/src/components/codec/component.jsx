@@ -1,3 +1,3 @@
 export const Codec = ({codec}) => {
-    return <div>{codec}</div>;
+    return <span>{codec.type}</span>;
 }; 

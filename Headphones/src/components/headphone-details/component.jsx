@@ -7,12 +7,10 @@ export const HeadphoneDetails = ({headphone}) => {
     const {brand, type, maxVolume} = headphone;
 
     return (
-        <div>
-            <div>
-                <p>{brand}</p>
-                <p>{type}</p>
-                <p>{maxVolume}</p>
-            </div>
-        </div>
+        <ul>
+            <li>{brand}</li>
+            <li>{type}</li>
+            <li>{maxVolume}</li>
+        </ul>
     );
 };   

@@ -1,32 +1,75 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/no-unknown-property */ 
 import { Codecs } from "../codecs/component";
 import { HeadphoneDetails } from "../headphone-details/component";
 import { Reviews } from "../reviews/component";
+import {useCount} from "../../hooks/use-count";
+import { Button } from "../button/component";
+import {useSelector} from "react-redux";
+import {selectHeadphoneById} from "../../redux/entities/headphone/selectors";
 
-export const Headphone = ({headphone}) => {
+import styles from "./styles.module.scss";
+import {selectProductAmount} from "../../redux/ui/cart/selectors";
+import {useDispatch} from "react-redux";
+import {decrementProduct, incrementProduct} from "../../redux/ui/cart";
+import {useGetHeadphonesQuery} from "../new-review-form/component";
+import {useParams} from "react-router-dom";
+
+export const Headphone = ({className}) => {
+    const {headphoneId} = useParams();
+
+    const {data: headphone} = useGetHeadphonesQuery(undefined, {
+        selectFromResult: (result) => ({
+            ...result,
+            data: result.data?.find(({id}) => id === headphoneId),
+        }),
+    });
+
+    const dispatch = useDispatch();
+    const amount = useSelector((state) =>
+        selectProductAmount(state,headphoneId)
+    );
+    const increment = () => dispatch(incrementProduct(headphoneId));
+    const decrement = () => dispatch(decrementProduct(headphoneId));
+
     if (!headphone) {
         return null;
     }
 
-    const {name, codecs, reviews} = headphone;
+    const { name, codecs, reviews } = headphone;
 
     return (
-        <div>
-            <h2>{name ? name : "NoName"}</h2> 
+        <div className={className}>
+            <div>
+                <h2>{name}</h2>
+                <div>
+                    <Button
+                        onClick={decrement}
+                        disabled={amount === 0}
+                        viewVariant = "primary"
+                        className={styles.action}
+                    >
+                    -
+                    </Button>
+                    {amount}
+                    <Button
+                        onClick={increment}
+                        disabled={amount === 5}
+                        viewVariant = "primary"
+                        className={styles.action}
+                    >
+                    +
+                    </Button>
+                </div>
+            </div>
             <HeadphoneDetails headphone={headphone}/>
-
-            {!!codecs?.length && (
             <div>
                 <h3>Codecs</h3>
-                <Codecs codecs={codecs}/>
+                <Codecs headphoneId={headphoneId}/>
             </div>
-            )}
-
             <div>
-                <h3>Reviews</h3>
-                {reviews?.length ? <Reviews reviews={reviews}/> : "No reviews"}
+                <h3>Review</h3>
+                <Reviews headphoneId={headphoneId}/>
+                <NewReviewForm headphoneId={headphoneId}/>
             </div>
         </div>
     );
-};   
+};

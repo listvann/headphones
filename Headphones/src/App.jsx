@@ -1,23 +1,41 @@
+import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { HeadphonesPage } from "./pages/headphones";
+import { AboutUsPage } from "./pages/about-us";
 import { Layout } from "./components/layout/component";
-import { headphones } from "./constants/mock";
-import { Headphone } from './components/headphone/component';
-import { useState } from "react";
-import { HeadphoneTabs } from "./components/headphone-tabs/component";
+import { HomePage } from "./pages/home";
+import { Headphone } from "./components/headphone/component";
+import { Navigate } from "react-router-dom";
 
-/* const getSavedCurrentHeadphoneIndex = () =>
-  Number(localStorage.getItem("currentHeadphoneIndex")); */
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "headphones",
+        element: <HeadphonesPage />,
+        children: [
+          {
+            path: ":headphoneId",
+            element: <Headphone />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/about-us",
+    element: <AboutUsPage />,
+  },
+  {
+    path: "/onlyForAuthorized",
+    element: <Navigate to="/" replace />,
+  },
+]);
 
-export const App = () => {
-  const [currentHeadphoneIndex, setCurrentHeadphoneIndex] = useState(0);
-  const currentHeadphone = headphones[currentHeadphoneIndex];
-
-  return (
-    <Layout>
-      <HeadphoneTabs
-        headphones={headphones}
-        currentIndex={currentHeadphoneIndex}
-        onTabClick={setCurrentHeadphoneIndex} />
-      {currentHeadphone && <Headphone headphone={currentHeadphone} />}
-    </Layout>
-  );
-};
+export const App = () => <RouterProvider router={router} />;
